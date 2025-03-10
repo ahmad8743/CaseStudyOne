@@ -36,27 +36,44 @@ test2 = @(t, x) system_x(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0);
 
 
 figure(1);
-subplot(1, 2, 1)
+sgtitle('With Prey Immigrants', 'FontSize', 11, 'FontWeight', 'bold');
+annotation('textbox', [0.4, 0.905, 1, 0.05], 'String', ...
+    'C(x) = c, D(x) = 0', 'FontSize', 10, 'EdgeColor', 'none');
+annotation('textbox', [0.39, 0.45, 1, 0.05], 'String', ...
+    'C(x) = c/x, D(x) = 0', 'FontSize', 10, 'EdgeColor', 'none');
+subplot(2, 2, 1)
 plot(t1, s1, 'LineWidth', 2);
 xlim([-100 1500]); 
 xticks(0:200:1500);
 ylim([-1 15]);
 yticks(0:2:14);
+axis square;
 
-subplot(1, 2, 2);
-plot(s1(:, 1), s1(:, 2));
-exportgraphics(gca, 'fig1.png');
+subplot(2, 2, 2);
+plot(s1(:, 1), s1(:, 2), 'Color', '#2E8B57');
+xlim([-0.2 5.1]);
+xticks(0:1:5);
+ylim([-0.5 16]);
+yticks(0:2:14);
+axis square;
 
-figure(2);
-subplot(1, 2, 1)
+subplot(2, 2, 3)
 plot(t2, s2, 'LineWidth', 2);
 xlim([-100 1500]); 
 xticks(0:200:1500);
 ylim([-1 15]);
 yticks(0:2:14);
+axis square;
 
-subplot(1, 2, 2);
-plot(s2(:, 1), s2(:, 2));
+subplot(2, 2, 4);
+plot(s2(:, 1), s2(:, 2), 'Color', '#2E8B57');
+xlim([-0.1 5.1]);
+xticks(0:1:5);
+ylim([0 16]);
+yticks(0:2:14);
+axis square;
+
+exportgraphics(gcf, 'fig1.png');
 
 % rest of plots are easy...
 
@@ -68,4 +85,4 @@ plot(s2(:, 1), s2(:, 2));
 % sampling a large area
 % It might be benificial to divide by total population in an area...
 
-% 
+%% 
