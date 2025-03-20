@@ -1,7 +1,9 @@
 % Names: Ahmad Hamzeh, Samir Afsary
 % Case Study 1
+% Part 1
 
 %% Recreating Figure 1
+clear; clc;
 tspan = [0 1500];
 initial = [5 5];
 
@@ -49,7 +51,7 @@ ylim([0 16]);
 yticks(0:2:14);
 axis square;
 
-exportgraphics(gcf, 'fig1.png');
+exportgraphics(gcf, 'Part1Plots/fig1.png');
 
 % With predator immigrants
 test3 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0, 0.01);
@@ -95,7 +97,7 @@ ylim([-0.2 16]);
 yticks(0:2:14);
 axis square;
 
-exportgraphics(gcf, 'fig2.png');
+exportgraphics(gcf, 'Part1Plots/fig2.png');
 
 % Without immigrants
 test5 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0, 0);
@@ -121,7 +123,54 @@ ylim([-0.5 16]);
 yticks(0:2:14);
 axis square;
 
-exportgraphics(gcf, 'fig3.png');
+exportgraphics(gcf, 'Part1Plots/fig3.png');
 
 
 %% Strategy
+close all; clc;
+
+% change c by factor of 20
+strat1 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.01);
+[t6, s6] = ode45(strat1, tspan, initial);
+strat2 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.2, 0.1);
+[t7, s7] = ode45(strat2, tspan, initial);
+
+figure(4);
+subplot(1, 2, 1);
+plot(s6(:, 1), s6(:, 2), 'Color', '#2E8B57');
+xlim([-0.2 6.1]);
+xticks(0:1:6);
+ylim([-0.5 16]);
+yticks(0:2:14);
+axis square;
+
+subplot(1, 2, 2);
+plot(s7(:, 1), s7(:, 2), 'Color', '#2E8B57');
+xlim([-0.2 6.1]);
+xticks(0:1:6);
+ylim([-0.5 16]);
+yticks(0:2:14);
+axis square;
+
+% change d by factor of 20
+strat3 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.01);
+[t8, s8] = ode45(strat3, tspan, initial);
+strat4 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.2);
+[t9, s9] = ode45(strat4, tspan, initial);
+
+figure(5);
+subplot(1, 2, 1);
+plot(s8(:, 1), s8(:, 2), 'Color', '#2E8B57');
+xlim([-0.2 6.1]);
+xticks(0:1:6);
+ylim([-0.5 16]);
+yticks(0:2:14);
+axis square;
+
+subplot(1, 2, 2);
+plot(s9(:, 1), s9(:, 2), 'Color', '#2E8B57');
+xlim([-0.2 6.1]);
+xticks(0:1:6);
+ylim([-0.5 16]);
+yticks(0:2:14);
+axis square;
