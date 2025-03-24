@@ -2,12 +2,15 @@
 % Case Study 1
 % Part 1
 
-%% Recreating Figure 1
+%% Recreating Figure 1 - Exploring Dynamics without Immigration
 clear; clc;
-tspan = [0 1500];
-initial = [5 5];
+tspan = [0 1500]; % Sim time interval
+initial = [5 5]; % Initial Pop: [Pred, Prey]
 
-% With prey immigrants
+% --- Case 1: With Prey Immigration ---
+ % Using two different prey immigration models:
+ % test1: constant prey immigration (C(x) = c, D(y) = 0)
+ % test2: inverse prey immigration (C(x) = c/x, D(y) = 0)
 test1 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0);
 [t1, s1] = ode45(test1, tspan, initial);
 test2 = @(t, x) system_x(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0);
@@ -53,7 +56,9 @@ axis square;
 
 exportgraphics(gcf, 'Part1Plots/fig1.png');
 
-% With predator immigrants
+% --- Case 2: With Predator Immigration ---
+ % test3: constant predator immigration (D(y) = d)
+ % test4: inverse predator immigration (D(y) = d/y)
 test3 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0, 0.01);
 [t3, s3] = ode45(test3, tspan, initial);
 test4 = @(t, x) system_x(t, x, 0.1, 0.1, 0.3, 0.2, 0, 0.01);
@@ -99,7 +104,8 @@ axis square;
 
 exportgraphics(gcf, 'Part1Plots/fig2.png');
 
-% Without immigrants
+% --- Case 3: No Immigration ---
+ % Baseline system dynamics with no immigration (c = d = 0)
 test5 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0, 0);
 [t5, s5] = ode45(test5, tspan, initial);
 
@@ -126,13 +132,14 @@ axis square;
 exportgraphics(gcf, 'Part1Plots/fig3.png');
 
 
-%% Control Strategy
+%% --- Control Strategy ---
 clear; clc;
 tspan = [0 1500];
 initial1 = [2 2];
 initial2 = [1.5 1.5];
 
-% controlling the predator population
+% --- Predator Control Strategies ---
+% Trying different combinations of immigration (c: prey, d: predator)
 strat1 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.01);
 [t6, s6] = ode45(strat1, tspan, initial1);
 strat2 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.07);
@@ -191,7 +198,8 @@ title('Increasing Both: c = 0.07, d = 0.07');
 exportgraphics(gcf, 'Part1Plots/Controls1.png');
 
 
-% controlling the prey population
+% --- Prey Control Strategies ---
+% Exploring different predator/prey immigration levels to manage population
 strat5 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.04, 0.04);
 [t10, s10] = ode45(strat5, tspan, initial2);
 strat6 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.04, 0.1);
