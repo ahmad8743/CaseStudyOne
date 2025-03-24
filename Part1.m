@@ -126,51 +126,125 @@ axis square;
 exportgraphics(gcf, 'Part1Plots/fig3.png');
 
 
-%% Strategy
-close all; clc;
+%% Control Strategy
+clear; clc;
+tspan = [0 1500];
+initial1 = [2 2];
+initial2 = [1.5 1.5];
 
-% change c by factor of 20
+% controlling the predator population
 strat1 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.01);
-[t6, s6] = ode45(strat1, tspan, initial);
-strat2 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.2, 0.1);
-[t7, s7] = ode45(strat2, tspan, initial);
+[t6, s6] = ode45(strat1, tspan, initial1);
+strat2 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.07);
+[t7, s7] = ode45(strat2, tspan, initial1);
+strat3 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.07, 0.01);
+[t8, s8] = ode45(strat3, tspan, initial1);
+strat4 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.07, 0.07);
+[t9, s9] = ode45(strat4, tspan, initial1);
+
 
 figure(4);
-subplot(1, 2, 1);
+subplot(2, 2, 1);
 plot(s6(:, 1), s6(:, 2), 'Color', '#2E8B57');
-xlim([-0.2 6.1]);
-xticks(0:1:6);
-ylim([-0.5 16]);
-yticks(0:2:14);
+xlim([-0.2 2.1]);
+xticks(0:0.5:2);
+ylim([-0.5 5.1]);
+yticks(0:1:5);
+xlabel('Prey');
+ylabel('Predator');
 axis square;
+title('Control: c = 0.01, d = 0.01');
 
-subplot(1, 2, 2);
+subplot(2, 2, 2);
 plot(s7(:, 1), s7(:, 2), 'Color', '#2E8B57');
-xlim([-0.2 6.1]);
-xticks(0:1:6);
-ylim([-0.5 16]);
-yticks(0:2:14);
+xlim([-0.2 2.1]);
+xticks(0:0.5:2);
+ylim([-0.5 5.1]);
+yticks(0:1:5);
+xlabel('Prey');
+ylabel('Predator');
 axis square;
+title('Increasing Predator Immigration: c = 0.01, d = 0.07');
 
-% change d by factor of 20
-strat3 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.01);
-[t8, s8] = ode45(strat3, tspan, initial);
-strat4 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.01, 0.2);
-[t9, s9] = ode45(strat4, tspan, initial);
+subplot(2, 2, 3);
+plot(s8(:, 1), s8(:, 2), 'Color', '#2E8B57');
+xlim([-0.2 2.1]);
+xticks(0:0.5:2);
+ylim([-0.5 5.1]);
+yticks(0:1:5);
+xlabel('Prey');
+ylabel('Predator');
+axis square;
+title('Increasing Prey Immigration: c = 0.07, d = 0.01');
+
+
+subplot(2, 2, 4);
+plot(s9(:, 1), s9(:, 2), 'Color', '#2E8B57');
+xlim([-0.2 2.1]);
+xticks(0:0.5:2);
+ylim([-0.5 5.1]);
+yticks(0:1:5);
+xlabel('Prey');
+ylabel('Predator');
+axis square;
+title('Increasing Both: c = 0.07, d = 0.07');
+exportgraphics(gcf, 'Part1Plots/Controls1.png');
+
+
+% controlling the prey population
+strat5 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.04, 0.04);
+[t10, s10] = ode45(strat5, tspan, initial2);
+strat6 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.04, 0.1);
+[t11, s11] = ode45(strat6, tspan, initial2);
+strat7 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.07, 0.01);
+[t12, s12] = ode45(strat7, tspan, initial2);
+strat8 = @(t, x) system(t, x, 0.1, 0.1, 0.3, 0.2, 0.07, 0);
+[t13, s13] = ode45(strat8, tspan, initial2);
+
 
 figure(5);
-subplot(1, 2, 1);
-plot(s8(:, 1), s8(:, 2), 'Color', '#2E8B57');
-xlim([-0.2 6.1]);
-xticks(0:1:6);
-ylim([-0.5 16]);
-yticks(0:2:14);
+subplot(2, 2, 1);
+plot(s10(:, 1), s10(:, 2), 'Color', '#2E8B57');
+xlim([0 1.5]);
+xticks(0:0.5:1.5);
+ylim([1 4]);
+yticks(1:1:4);
+xlabel('Prey');
+ylabel('Predator');
 axis square;
+title('Control: c = 0.04, d = 0.04');
 
-subplot(1, 2, 2);
-plot(s9(:, 1), s9(:, 2), 'Color', '#2E8B57');
-xlim([-0.2 6.1]);
-xticks(0:1:6);
-ylim([-0.5 16]);
-yticks(0:2:14);
+subplot(2, 2, 2);
+plot(s11(:, 1), s11(:, 2), 'Color', '#2E8B57');
+xlim([0 1.5]);
+xticks(0:0.5:1.5);
+ylim([1 4]);
+yticks(1:1:4);
+xlabel('Prey');
+ylabel('Predator');
 axis square;
+title('Increased Predator Immigration: c = 0.04, d = 0.08');
+
+subplot(2, 2, 3);
+plot(s12(:, 1), s12(:, 2), 'Color', '#2E8B57');
+xlim([0 1.5]);
+xticks(0:0.5:1.5);
+ylim([1 4]);
+yticks(1:1:4);
+xlabel('Prey');
+ylabel('Predator');
+axis square;
+title('Small Predator Immigration: c = 0.07, d = 0.01');
+
+
+subplot(2, 2, 4);
+plot(s13(:, 1), s13(:, 2), 'Color', '#2E8B57');
+xlim([0 1.5]);
+xticks(0:0.5:1.5);
+ylim([1 4]);
+yticks(1:1:4);
+xlabel('Prey');
+ylabel('Predator');
+axis square;
+title('No Predator Immigration: c = 0.07, d = 0');
+exportgraphics(gcf, 'Part1Plots/Controls2.png');
