@@ -2,7 +2,7 @@
 % Case Study 1
 % Part 1
 
-%% Recreating Figure 1 - Exploring Dynamics without Immigration
+%% Recreating Figure 1 - Exploring Immigration Dynamics
 clear; clc;
 tspan = [0 1500]; % Sim time interval
 initial = [5 5]; % Initial Pop: [Pred, Prey]
